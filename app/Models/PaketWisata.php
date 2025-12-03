@@ -11,6 +11,7 @@ class PaketWisata extends Model
     public $timestamps = false;
     
     protected $fillable = [
+        'id_paket',
         'nama_paket',
         'destinasi',
         'harga',

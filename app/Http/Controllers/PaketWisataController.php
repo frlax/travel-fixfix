@@ -55,7 +55,7 @@ class PaketWisataController extends Controller
             'harga'      => $request->harga,
             'deskripsi'  => $request->deskripsi,
             'foto'       => $foto_name,
-            'created_at' => now(),
+            'created_at' => DB::raw('NOW()'),
         ]);
 
         return redirect('/paket-wisata')->with('success', 'Paket wisata berhasil ditambahkan!');
@@ -115,7 +115,7 @@ class PaketWisataController extends Controller
                 'harga'      => $request->harga,
                 'deskripsi'  => $request->deskripsi,
                 'foto'       => $foto_name,
-                'updated_at' => now(),
+                'updated_at' => DB::raw('NOW()'),
             ]);
 
         return redirect('/paket-wisata')->with('success', 'Paket wisata berhasil diupdate!');
