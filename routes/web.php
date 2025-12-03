@@ -50,7 +50,7 @@ Route::middleware(['auth', 'admin', PreventBackHistory::class])->group(function 
         Route::get('/tambah', [PaketWisataController::class, 'tambah'])->name('paket.tambah');
         Route::post('/store', [PaketWisataController::class, 'store'])->name('paket.store');
         Route::get('/edit/{id}', [PaketWisataController::class, 'edit'])->name('paket.edit');
-        Route::post('/update', [PaketWisataController::class, 'update'])->name('paket.update');
+        Route::post('/update/{id}', [PaketWisataController::class, 'update'])->name('paket.update');
         Route::get('/hapus/{id}', [PaketWisataController::class, 'hapus'])->name('paket.hapus');
         Route::get('/cari', [PaketWisataController::class, 'cari'])->name('paket.cari');
         Route::get('/laporan', [PaketWisataController::class, 'laporan'])->name('paket.laporan');

@@ -12,9 +12,8 @@ class PaketWisataController extends Controller
     {
         $paket_wisata = DB::table('paket_wisata')
             ->orderBy('id_paket', 'desc')
-            ->paginate(9); // 9 per halaman
+            ->paginate(9);
 
-        // Kirim data role ke view
         $isAdmin = auth()->user()->role === 'admin';
 
         return view('paket_wisata.index', [
@@ -44,7 +43,7 @@ class PaketWisataController extends Controller
         $foto_name = null;
         if ($request->hasFile('foto')) {
             $foto = $request->file('foto');
-            $foto_name = time() . '_' . $foto->getClientOriginalName();
+            $foto_name = time().'_'.$foto->getClientOriginalName();
             $foto->move(public_path('uploads/paket_wisata'), $foto_name);
         }
 
@@ -74,10 +73,9 @@ class PaketWisataController extends Controller
     }
 
     // UPDATE - Proses update data (ADMIN ONLY)
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'id_paket'   => 'required',
             'nama_paket' => 'required|max:100',
             'destinasi'  => 'required|max:100',
             'durasi'     => 'required|max:50',
@@ -86,7 +84,7 @@ class PaketWisataController extends Controller
             'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $paket = DB::table('paket_wisata')->where('id_paket', $request->id_paket)->first();
+        $paket = DB::table('paket_wisata')->where('id_paket', $id)->first();
 
         if (! $paket) {
             return redirect('/paket-wisata')->with('error', 'Paket tidak ditemukan');
@@ -95,19 +93,17 @@ class PaketWisataController extends Controller
         $foto_name = $paket->foto;
 
         if ($request->hasFile('foto')) {
-            // Hapus foto lama
-            if ($paket->foto && file_exists(public_path('uploads/paket_wisata/' . $paket->foto))) {
-                unlink(public_path('uploads/paket_wisata/' . $paket->foto));
+            if ($paket->foto && file_exists(public_path('uploads/paket_wisata/'.$paket->foto))) {
+                unlink(public_path('uploads/paket_wisata/'.$paket->foto));
             }
 
-            // Upload foto baru
             $foto = $request->file('foto');
-            $foto_name = time() . '_' . $foto->getClientOriginalName();
+            $foto_name = time().'_'.$foto->getClientOriginalName();
             $foto->move(public_path('uploads/paket_wisata'), $foto_name);
         }
 
         DB::table('paket_wisata')
-            ->where('id_paket', $request->id_paket)
+            ->where('id_paket', $id)
             ->update([
                 'nama_paket' => $request->nama_paket,
                 'destinasi'  => $request->destinasi,
@@ -130,9 +126,8 @@ class PaketWisataController extends Controller
             return redirect('/paket-wisata')->with('error', 'Paket tidak ditemukan');
         }
 
-        // Hapus foto
-        if ($paket->foto && file_exists(public_path('uploads/paket_wisata/' . $paket->foto))) {
-            unlink(public_path('uploads/paket_wisata/' . $paket->foto));
+        if ($paket->foto && file_exists(public_path('uploads/paket_wisata/'.$paket->foto))) {
+            unlink(public_path('uploads/paket_wisata/'.$paket->foto));
         }
 
         DB::table('paket_wisata')->where('id_paket', $id)->delete();
@@ -149,7 +144,7 @@ class PaketWisataController extends Controller
             ->where('nama_paket', 'LIKE', "%{$keyword}%")
             ->orWhere('destinasi', 'LIKE', "%{$keyword}%")
             ->orderBy('id_paket', 'desc')
-            ->paginate(9); // pakai 9 juga supaya konsisten
+            ->paginate(9);
 
         $isAdmin = auth()->user()->role === 'admin';
 
