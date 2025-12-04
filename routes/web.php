@@ -37,9 +37,11 @@ Route::middleware(['auth', PreventBackHistory::class])->group(function () {
     Route::get('/destinasi', [DestinasiController::class, 'index'])
         ->name('destinasi.index');
 
-    // Paket Wisata index (admin & user)
+    // Paket Wisata index + search (ADMIN & USER bisa akses)
     Route::get('/paket-wisata', [PaketWisataController::class, 'index'])
         ->name('paket.index');
+    Route::get('/paket-wisata/cari', [PaketWisataController::class, 'index'])
+        ->name('paket.cari');   // pakai method index yang sama
 });
 
 // ===== ADMIN ROUTES =====
@@ -52,7 +54,6 @@ Route::middleware(['auth', 'admin', PreventBackHistory::class])->group(function 
         Route::get('/edit/{id}', [PaketWisataController::class, 'edit'])->name('paket.edit');
         Route::post('/update/{id}', [PaketWisataController::class, 'update'])->name('paket.update');
         Route::get('/hapus/{id}', [PaketWisataController::class, 'hapus'])->name('paket.hapus');
-        Route::get('/cari', [PaketWisataController::class, 'cari'])->name('paket.cari');
         Route::get('/laporan', [PaketWisataController::class, 'laporan'])->name('paket.laporan');
     });
 

@@ -7,12 +7,25 @@ use Illuminate\Support\Facades\DB;
 
 class PaketWisataController extends Controller
 {
-    // READ - Menampilkan semua paket (ADMIN & USER bisa akses)
-    public function index()
+    // READ - Menampilkan semua paket + search (ADMIN & USER)
+    public function index(Request $request)
     {
-        $paket_wisata = DB::table('paket_wisata')
+        $query = DB::table('paket_wisata');
+
+        // Jika ada keyword "cari", filter nama_paket atau destinasi
+        if ($request->filled('cari')) {
+            $keyword = $request->cari;
+
+            $query->where(function ($q) use ($keyword) {
+                $q->where('nama_paket', 'LIKE', "%{$keyword}%")
+                  ->orWhere('destinasi', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        $paket_wisata = $query
             ->orderBy('id_paket', 'desc')
-            ->paginate(9);
+            ->paginate(9)
+            ->withQueryString(); // supaya ?cari tidak hilang saat pagination
 
         $isAdmin = auth()->user()->role === 'admin';
 
@@ -34,7 +47,7 @@ class PaketWisataController extends Controller
         $request->validate([
             'nama_paket' => 'required|max:100',
             'destinasi'  => 'required|max:100',
-            'durasi' => 'required|string|max:50',
+            'durasi'     => 'required|string|max:50',
             'harga'      => 'required|numeric',
             'deskripsi'  => 'nullable',
             'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -116,7 +129,6 @@ class PaketWisataController extends Controller
 
         return redirect('/paket-wisata')->with('success', 'Paket wisata berhasil diupdate!');
     }
-
     // DELETE - Hapus data (ADMIN ONLY)
     public function hapus($id)
     {
@@ -133,25 +145,6 @@ class PaketWisataController extends Controller
         DB::table('paket_wisata')->where('id_paket', $id)->delete();
 
         return redirect('/paket-wisata')->with('success', 'Paket wisata berhasil dihapus!');
-    }
-
-    // SEARCH - Pencarian (ADMIN ONLY)
-    public function cari(Request $request)
-    {
-        $keyword = $request->cari;
-
-        $paket_wisata = DB::table('paket_wisata')
-            ->where('nama_paket', 'LIKE', "%{$keyword}%")
-            ->orWhere('destinasi', 'LIKE', "%{$keyword}%")
-            ->orderBy('id_paket', 'desc')
-            ->paginate(9);
-
-        $isAdmin = auth()->user()->role === 'admin';
-
-        return view('paket_wisata.index', [
-            'paket_wisata' => $paket_wisata,
-            'isAdmin'      => $isAdmin,
-        ]);
     }
 
     // REPORT - Laporan (ADMIN ONLY)

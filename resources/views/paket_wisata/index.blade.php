@@ -521,7 +521,7 @@
 
 <!-- Search Box - Hanya untuk Admin
 @if($isAdmin) -->
-<form action="/paket-wisata/cari" method="GET">
+<form action="{{ route('paket.cari') }}" method="GET">
     <div class="search-box-modern">
         <i class="fas fa-search info-icon"></i>
         <input 
