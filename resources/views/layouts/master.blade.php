@@ -616,8 +616,8 @@
                 </div>
                 <div class="footer-section">
                     <h5>Kontak</h5>
-                    <p><i class="fas fa-map-marker-alt"></i> Jl. Raya Wisata No. 123, Jakarta</p>
-                    <p><i class="fas fa-phone"></i> +62 812-3456-7890</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Jl. Keputih Tegal Timur 3b, Surabaya</p>
+                    <p><i class="fas fa-phone"></i> +62 898-3456-459</p>
                     <p><i class="fas fa-envelope"></i> info@travelindo.com</p>
                 </div>
             </div>
