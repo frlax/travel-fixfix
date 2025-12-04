@@ -519,8 +519,8 @@
 </div>
 @endif
 
-<!-- Search Box - Hanya untuk Admin -->
-@if($isAdmin)
+<!-- Search Box - Hanya untuk Admin
+@if($isAdmin) -->
 <form action="/paket-wisata/cari" method="GET">
     <div class="search-box-modern">
         <i class="fas fa-search info-icon"></i>
@@ -535,7 +535,7 @@
         </button>
     </div>
 </form>
-@endif
+<!-- @endif -->
 
 <!-- Card Grid -->
 <div class="row g-4">
