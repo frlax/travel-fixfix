@@ -35,6 +35,48 @@ class PaketWisataController extends Controller
         ]);
     }
 
+    // KATALOG - Untuk user (search + sort harga/abjad)
+    public function katalog(Request $request)
+    {
+        $query = DB::table('paket_wisata');
+
+        // search nama_paket / destinasi
+        if ($request->filled('search')) {
+            $keyword = $request->search;
+
+            $query->where(function ($q) use ($keyword) {
+                $q->where('nama_paket', 'LIKE', "%{$keyword}%")
+                  ->orWhere('destinasi', 'LIKE', "%{$keyword}%");
+            });
+        }
+
+        // sort: termurah, termahal, nama A-Z
+        if ($request->filled('sort')) {
+            switch ($request->sort) {
+                case 'price_asc':
+                    $query->orderBy('harga', 'asc');
+                    break;
+                case 'price_desc':
+                    $query->orderBy('harga', 'desc');
+                    break;
+                case 'name_asc':
+                    $query->orderBy('nama_paket', 'asc');
+                    break;
+                default:
+                    $query->orderBy('id_paket', 'desc');
+            }
+        } else {
+            // default: terbaru
+            $query->orderBy('id_paket', 'desc');
+        }
+
+        $paket_wisata = $query
+            ->paginate(9)
+            ->withQueryString(); // supaya ?search & ?sort ikut di pagination
+
+        return view('katalog.index', compact('paket_wisata'));
+    }
+
     // CREATE - Tampilkan form tambah paket (ADMIN ONLY)
     public function tambah()
     {
@@ -129,6 +171,7 @@ class PaketWisataController extends Controller
 
         return redirect('/paket-wisata')->with('success', 'Paket wisata berhasil diupdate!');
     }
+
     // DELETE - Hapus data (ADMIN ONLY)
     public function hapus($id)
     {

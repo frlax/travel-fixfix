@@ -42,6 +42,10 @@ Route::middleware(['auth', PreventBackHistory::class])->group(function () {
         ->name('paket.index');
     Route::get('/paket-wisata/cari', [PaketWisataController::class, 'index'])
         ->name('paket.cari');   // pakai method index yang sama
+
+    // Katalog Paket Wisata (USER & ADMIN bisa lihat katalog dengan search + sort)
+    Route::get('/katalog', [PaketWisataController::class, 'katalog'])
+        ->name('katalog.index');
 });
 
 // ===== ADMIN ROUTES =====

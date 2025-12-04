@@ -4,6 +4,7 @@
 
 @section('css')
 <style>
+    /* CSS kamu biarkan sama persis, tidak diubah */
     .page-header-katalog {
         background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
         color: white;
@@ -11,18 +12,15 @@
         margin-bottom: 3rem;
         text-align: center;
     }
-
     .page-header-katalog h1 {
         font-size: 3rem;
         font-weight: 900;
         margin-bottom: 1rem;
     }
-
     .page-header-katalog p {
         font-size: 1.25rem;
         opacity: 0.9;
     }
-
     .search-box-katalog {
         background: white;
         border: 2px solid #e0e0e0;
@@ -35,14 +33,12 @@
         margin: 0 auto 3rem;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
-
     .search-box-katalog input {
         border: none;
         outline: none;
         flex: 1;
         font-size: 1rem;
     }
-
     .search-box-katalog button {
         background: #1a1a1a;
         color: white;
@@ -53,11 +49,9 @@
         cursor: pointer;
         transition: all 0.3s ease;
     }
-
     .search-box-katalog button:hover {
         background: #000000;
     }
-
     .paket-card {
         background: white;
         border-radius: 16px;
@@ -68,18 +62,15 @@
         display: flex;
         flex-direction: column;
     }
-
     .paket-card:hover {
         transform: translateY(-8px);
         box-shadow: 0 12px 24px rgba(0,0,0,0.15);
     }
-
     .paket-image {
         width: 100%;
         height: 250px;
         object-fit: cover;
     }
-
     .paket-badge {
         position: absolute;
         top: 1rem;
@@ -92,21 +83,18 @@
         font-size: 0.9rem;
         box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
     .paket-content {
         padding: 1.5rem;
         flex: 1;
         display: flex;
         flex-direction: column;
     }
-
     .paket-title {
         font-size: 1.5rem;
         font-weight: 700;
         color: #1a1a1a;
         margin-bottom: 0.5rem;
     }
-
     .paket-location {
         color: #666666;
         display: flex;
@@ -114,7 +102,6 @@
         gap: 0.5rem;
         margin-bottom: 1rem;
     }
-
     .paket-description {
         color: #666666;
         line-height: 1.6;
@@ -125,7 +112,6 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
-
     .paket-info {
         display: flex;
         gap: 1rem;
@@ -133,7 +119,6 @@
         padding-top: 1rem;
         border-top: 1px solid #e0e0e0;
     }
-
     .info-item {
         display: flex;
         align-items: center;
@@ -141,7 +126,6 @@
         color: #666666;
         font-size: 0.9rem;
     }
-
     .paket-footer {
         display: flex;
         justify-content: space-between;
@@ -150,13 +134,11 @@
         background: #f5f5f5;
         border-top: 1px solid #e0e0e0;
     }
-
     .price-tag {
         font-size: 1.75rem;
         font-weight: 800;
         color: #1a1a1a;
     }
-
     .btn-booking {
         background: linear-gradient(135deg, #1a1a1a, #000000);
         color: white;
@@ -169,13 +151,11 @@
         align-items: center;
         gap: 0.5rem;
     }
-
     .btn-booking:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(0,0,0,0.25);
         color: white;
     }
-
     .alert-katalog {
         border: none;
         border-radius: 12px;
@@ -185,26 +165,21 @@
         align-items: center;
         gap: 0.75rem;
     }
-
     .alert-success {
         background: #d1fae5;
         color: #065f46;
     }
-
     .alert-warning {
         background: #fef3c7;
         color: #92400e;
     }
-
     @media (max-width: 768px) {
         .page-header-katalog h1 {
             font-size: 2rem;
         }
-
         .paket-image {
             height: 200px;
         }
-
         .search-box-katalog {
             max-width: 100%;
         }
@@ -228,19 +203,39 @@
     </div>
     @endif
 
-    <!-- Search Box -->
-    <form action="{{ route('katalog.index') }}" method="GET">
-        <div class="search-box-katalog">
-            <i class="fas fa-search" style="color: #666666;"></i>
-            <input 
-                type="text" 
-                name="search" 
-                placeholder="Cari destinasi atau paket wisata..." 
-                value="{{ request('search') }}"
-                autocomplete="off">
-            <button type="submit">
-                <i class="fas fa-search"></i> Cari
-            </button>
+    <!-- Search + Sort -->
+    <form action="{{ route('katalog.index') }}" method="GET" class="mb-4">
+        <div class="row g-3 justify-content-center">
+            <div class="col-md-6">
+                <div class="search-box-katalog">
+                    <i class="fas fa-search" style="color: #666666;"></i>
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="Cari destinasi atau paket wisata..." 
+                        value="{{ request('search') }}"
+                        autocomplete="off">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <select name="sort" class="form-select">
+                    <option value="">Urutkan: Default</option>
+                    <option value="price_asc"  {{ request('sort') == 'price_asc' ? 'selected' : '' }}>
+                        Harga termurah
+                    </option>
+                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>
+                        Harga termahal
+                    </option>
+                    <option value="name_asc"   {{ request('sort') == 'name_asc' ? 'selected' : '' }}>
+                        Nama (A-Z)
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-2 d-grid">
+                <button type="submit" class="btn btn-dark">
+                    <i class="fas fa-filter"></i> Terapkan
+                </button>
+            </div>
         </div>
     </form>
 
