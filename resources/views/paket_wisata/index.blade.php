@@ -519,8 +519,7 @@
 </div>
 @endif
 
-<!-- Search Box - Hanya untuk Admin
-@if($isAdmin) -->
+{{-- Search Box - untuk admin & user --}}
 <form action="{{ route('paket.cari') }}" method="GET">
     <div class="search-box-modern">
         <i class="fas fa-search info-icon"></i>
@@ -535,7 +534,7 @@
         </button>
     </div>
 </form>
-<!-- @endif -->
+
 
 <!-- Card Grid -->
 <div class="row g-4">
