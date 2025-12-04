@@ -25,7 +25,7 @@ class AppServiceProvider extends ServiceProvider
         Paginator::defaultView('vendor.pagination.custom');
 
         // Force HTTPS in production
-        if ($this->app->environment('production')) {
+        if (config('app.env') === 'production') {
             URL::forceScheme('https');
         }
     }
