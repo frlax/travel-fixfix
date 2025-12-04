@@ -179,7 +179,7 @@
     <div class="print-container">
         <!-- Header -->
         <div class="header">
-            <h1>🏝️ TravelIndo</h1>
+            <h1><i class="fas fa-plane-departure">TravelIndo</h1>
             <p>Laporan Konfirmasi Booking</p>
             <div class="status-badge">
                 ✅ Booking Dikonfirmasi
