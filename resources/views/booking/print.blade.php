@@ -32,21 +32,11 @@
             margin-bottom: 2rem;
         }
 
-        /* Brand: logo + teks */
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+        .header h1 {
             font-size: 2rem;
             font-weight: 900;
             color: #1a1a1a;
             margin-bottom: 0.5rem;
-        }
-
-        .brand-logo {
-            width: 32px;
-            height: auto;
         }
 
         .header p {
@@ -189,10 +179,7 @@
     <div class="print-container">
         <!-- Header -->
         <div class="header">
-            <div class="brand">
-                <img src="{{ asset('images/logo-plane.png') }}" alt="Logo" class="brand-logo">
-                <span>TravelIndo</span>
-            </div>
+            <h1>🏝️ TravelIndo</h1>
             <p>Laporan Konfirmasi Booking</p>
             <div class="status-badge">
                 ✅ Booking Dikonfirmasi
