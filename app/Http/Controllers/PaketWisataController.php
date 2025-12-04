@@ -34,7 +34,7 @@ class PaketWisataController extends Controller
         $request->validate([
             'nama_paket' => 'required|max:100',
             'destinasi'  => 'required|max:100',
-            'durasi'     => 'required|max:50',
+            'durasi' => 'required|string|max:50',
             'harga'      => 'required|numeric',
             'deskripsi'  => 'nullable',
             'foto'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
